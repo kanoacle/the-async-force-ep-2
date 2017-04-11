@@ -49,13 +49,38 @@ const getSpecies = (source, data, element, option) => {
 };
 
 const getPlanet = (data, element) => {
+  const name = document.createElement(`h3`);
+  const description = document.createElement(`p`);
+  const pop = document.createElement(`p`);
+  const movies = document.createElement(`ul`);
+  movies.id = `movies`;
+  name.innerHTML = data.name;
+  description.innerHTML = `Expectable terrain: ${data.terrain}`;
+  pop.innerHTML = `Approximate population: ${data.population}`;
+  movies.innerHTML = `Movies that ${data.name} appears in...`;
+  element.appendChild(name);
+  element.appendChild(description);
+  element.appendChild(pop);
+  element.appendChild(movies);
+  for (var i = 0; i < data.films.length; i++) {
+    dataReq(data.films[i], element, data.films, getMovies);
+  }
+};
 
+const getMovies = (source, data, element, option) => {
+  const movie = document.createElement('li');
+  const movies = document.querySelector(`#movies`);
+  movies.style.marginLeft = '-40px';
+  movie.style.marginLeft = '25px';
+  movie.style.listStyleType = 'hebrew';
+  movie.style.fontSize = '14px';
+  movie.innerHTML = data.title;
+  movies.appendChild(movie);
 };
 
 const getShip = (data, element) => {
 
 };
-
 
 document.querySelector(`#requestResourceButton`).onclick = () => {
   const option = document.querySelector(`#resourceType`).value;
