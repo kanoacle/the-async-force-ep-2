@@ -36,7 +36,7 @@ const getPerson = (data, element) => {
   const name = document.createElement(`h3`);
   const gender = document.createElement(`p`);
   name.innerHTML = data.name;
-  gender.innerHTML = data.gender;
+  gender.innerHTML = `Sex: ${data.gender}`;
   element.appendChild(name);
   element.appendChild(gender);
   dataReq(data.species[0], element, null, getSpecies);
@@ -44,7 +44,7 @@ const getPerson = (data, element) => {
 
 const getSpecies = (source, data, element, option) => {
   const species = document.createElement(`p`);
-  species.innerHTML = data.name;
+  species.innerHTML = `Species: ${data.name}`;
   element.appendChild(species);
 };
 
@@ -67,19 +67,34 @@ const getPlanet = (data, element) => {
   }
 };
 
-const getMovies = (source, data, element, option) => {
-  const movie = document.createElement('li');
-  const movies = document.querySelector(`#movies`);
-  movies.style.marginLeft = '-40px';
-  movie.style.marginLeft = '25px';
-  movie.style.listStyleType = 'hebrew';
-  movie.style.fontSize = '14px';
-  movie.innerHTML = data.title;
-  movies.appendChild(movie);
+const getShip = (data, element) => {
+  const name = document.createElement(`h3`);
+  const maker = document.createElement(`p`);
+  const type = document.createElement(`p`);
+  const movies = document.createElement(`ul`);
+  movies.id = `movies`;
+  name.innerHTML = data.name;
+  maker.innerHTML = `Maker: ${data.manufacturer}`;
+  type.innerHTML = `Type: ${data.starship_class}`;
+  movies.innerHTML = `Movies that the ${data.name} appears in...`;
+  element.appendChild(name);
+  element.appendChild(maker);
+  element.appendChild(type);
+  element.appendChild(movies);
+  for (var i = 0; i < data.films.length; i++) {
+    dataReq(data.films[i], element, data.films, getMovies);
+  }
 };
 
-const getShip = (data, element) => {
-
+const getMovies = (source, data, element, option) => {
+  const movie = document.createElement(`li`);
+  const movies = document.querySelector(`#movies`);
+  movies.style.marginLeft = `-40px`;
+  movie.style.marginLeft = `25px`;
+  movie.style.listStyleType = `hebrew`;
+  movie.style.fontSize = `14px`;
+  movie.innerHTML = data.title;
+  movies.appendChild(movie);
 };
 
 document.querySelector(`#requestResourceButton`).onclick = () => {
